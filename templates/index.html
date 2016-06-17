@@ -1,29 +1,40 @@
-  <style>
-dy{ 
-      font-size: 15pt;
-      font-family: arial;
-    }
-  </style>
-
-
+<html>
+<style>
+dy{
+       font-size: 15pt;
+       font-family: arial;
+}
+</style>
+<head>
+<link rel="stylesheet" href="test2.css">
+</head>
 <body>
-  <h1>Zane and Maurice's Magical Literature Database</h1>
-  <div>{{data}}</div>
-
-  <div>
-    {% for n in data %}
-    <div>{{n}}</div>
-    {% endfor %}
-  </div>
-
+<h1>Zane and Maurice's Magical Literature Database</h1>
+<tr><td>Select a category:</td><td>
+						<td bgcolor="#DADADA">
+                        <form method="get" action="/cgi-bin/ias/gsa/docSearch.pl">
+                                    <select name="category">
+                                        <option value="" selected>All
+                                            <option>Author</option>
+                                            <option>Text</option>
+                                            <option>Publisher</option>
+                                            <option>Country</option>
+                                            <option>Literary Style</option>
+                                            <option>Structure</option>
+                                    </select></td></tr>
+                        <input type=submit value="Search"></td></tr>
+                        </form></td></tr>
+<div>{{data}}</div>
+<div>
+{% for n in data %}
+<div>{{n}}</div>
+{% endfor %}
+</div>
 <p><a href="another">Go to the other page</a></p>
 
 <form method="POST" action="/add">
-<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
+<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p    >
 </form>
 
 </body>
-
-
 </html>
-
