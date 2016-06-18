@@ -69,17 +69,17 @@ def teardown_request(exception):
 def index():
   return render_template("index.html")
 
-
+"""
 @app.route('/selection')
 def selection():
 	select = request.form.get('category')
 	select.replace (" ", "_")
 	cursor = g.conn.execute('SELECT * FROM %s;', select)
-	  names = []
+	names = []
   	for result in cursor:
-    	names.append(result[0])
-  	cursor.close()
-  	context = dict(data = names)
+	    	names.append(result[0])
+	  	cursor.close()
+	  	context = dict(data = names)
 	return render_template("/selection.html", **context)
 
   #
@@ -108,27 +108,30 @@ def selection():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #  
+"""
 
+"""
 @app.route('/result')
 def result():
   if(select == "Author"):
   	#display table for 1 to 2 authors
   	#display 1 to 2 text tables for texts by that author
 	return render_template("/authorresult.html", **context)
-  if(select = "Text"):
+  if(select == "Text"):
   	return render_template("/textresult.html", **context)
-  if(select = "Publisher"):
+  if(select == "Publisher"):
   	return render_template("/publisherresult.html", **context)
-  if(select = "Country"):
+  if(select == "Country"):
   	return render_template("/countryresult.html", **context)
-  if(select = "Literary_Style"):
+  if(select == "Literary_Style"):
   	return render_template("/literarystyleresult.html", **context)
-  if(select = "Structure"):
-  	return render_template:("/structureresult.html", **context)
-  if(select = "Institution"):
-  	return render_template:("/institutionresult.html", **context)
-  
-    """ 
+  if(select == "Structure"):
+  	return render_template("/structureresult.html", **context)
+  if(select == "Institution"):
+  	return render_template("/institutionresult.html", **context)
+"""
+
+""" 
   request is a special object that Flask provides to access web request information:
   These methods are used to gather information about the HTML GET request coming from the browser
 the server, since it's a server, isn't requesting anything itself. Only the browser is requesting something.
@@ -138,7 +141,7 @@ the server, since it's a server, isn't requesting anything itself. Only the brow
   request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
 
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
-  """
+"""
 
 #This means that the following is effectively our "main" function
 if __name__ == "__main__":
