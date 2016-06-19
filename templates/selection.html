@@ -8,18 +8,20 @@ dy{
 <body>
 <center>
 <h1>Zane and Maurice's Magical Literature Database</h1>
-<h4><input type=submit value="Search"></td></tr></h4>
+<h4><a href="/">Home</a></td></tr></h4>
 </center>
 <center>
 <tr><td>Choose one. Or choose two to compare.</td><td>
 			<td bgcolor="#DADADA">
                         <form method="get" action="/result">
                                     <select name="entity1">
+					<option></option>
 					{% for n in data %}
 					<option>{{n}}</option>
 					{% endfor %}
                                     </select></td></tr>
                                     <select name="entity2">
+					<option></option>
 					{% for n in data %}
 					<option>{{n}}</option>
 					{% endfor %}

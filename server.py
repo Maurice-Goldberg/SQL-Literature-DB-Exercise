@@ -65,16 +65,30 @@ def teardown_request(exception):
 def index():
   return render_template("index.html")
 
-@app.route('/selection', methods=["GET"])
+@app.route('/selection', methods=["POST"])
 def selection():
 	select = request.form.get('category')
-	select.replace(" ", "_")
-	cursor = g.conn.execute('SELECT * FROM %s;', select)
+	print select
+	select = select.replace(" ", "_")
+	if(select=="Author"):
+		cursor = g.conn.execute('SELECT * FROM Author;')
+	elif(select=="Text"):
+		cursor = g.conn.execute('SELECT * FROM Text;')
+	elif(select=="Institution"):
+		cursor = g.conn.execute('SELECT * FROM Institution;')
+	elif(select=="Literary_Style"):
+		cursor = g.conn.execute('SELECT * FROM Literary_Style;')
+	elif(select=="Country"):
+		cursor = g.conn.execute('SELECT * FROM Country;')
+	elif(select=="Publisher"):
+		cursor = g.conn.execute('SELECT * FROM Publisher;')
+	elif(select=="Structure"):
+		cursor = g.conn.execute('SELECT * FROM Structure;')
 	names = []
   	for result in cursor:
 	    	names.append(result[0])
-	  	cursor.close()
 	  	context = dict(data = names)
+	cursor.close()
 	return render_template("/selection.html", **context)
 
 @app.route('/result')
@@ -88,8 +102,8 @@ def result():
 	namesA = []
   	for result in cursorA:
 	    	namesA.append(result[0])
-	  	cursorA.close()
 	  	contextA = dict(data = namesA)
+	cursorA.close()
 	return render_template("/authorresult.html", **contextA)
 
 #HOW DO YOU CREATE THREE SEPARATE TABLES IN FLASK ON ONE PAGE?? Can you render template three different times?
@@ -99,16 +113,16 @@ def result():
 	namesB = []
   	for result in cursorB:
 	    	namesB.append(result[0])
-	  	cursorB.close()
 	  	contextB = dict(data = namesB)
+	cursorB.close()
 	return render_template("/authorresult.html", **contextB)
 
         cursorC = g.conn.execute('')#SQL query for table3
 	namesC = []
   	for result in cursorC:
 	    	namesC.append(result[0])
-	  	cursorC.close()
 	  	contextC = dict(data = namesC)
+	cursorC.close()
 	return render_template("/authorresult.html", **contextC)
 
   if(select == "Text"):
