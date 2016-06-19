@@ -1,4 +1,4 @@
-/* Flask uses Jinja templates, which is an extension to HTML where you can
+<!--/* Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
   # (you can think of it as simple PHP)
   # documentation: https://realpython.com/blog/python/primer-on-jinja-templating/
@@ -22,7 +22,7 @@
   #     {% for n in data %}
   #     <div>{{n}}</div>
   #     {% endfor %}
-*/
+*/-->
 
 <html>
 <style>
@@ -34,24 +34,24 @@ dy{
 <body>
 <center>
 <h1>Zane and Maurice's Magical Literature Database</h1>
+<h4><input type=submit value="Search"></td></tr></h4>
 </center>
 <center>
-<tr><td>Choose a ???. Or choose two to compare.</td><td>
+<tr><td>Choose one. Or choose two to compare.</td><td>
 			<td bgcolor="#DADADA">
-                        <form method="get" action="/selection">
-                                    <select name="category">
-                                            <option>Author</option>
-                                            <option>Text</option>
-                                            <option>Publisher</option>
-                                            <option>Country</option>
-                                            <option>Literary Style</option>
-                                            <option>Structure</option>
-                                            <option>Institution</option>
+                        <form method="get" action="/result">
+                                    <select name="entity1">
+					{% for n in data %}
+					<option>{{n}}</option>
+					{% endfor %}
+                                    </select></td></tr>
+                                    <select name="entity2">
+					{% for n in data %}
+					<option>{{n}}</option>
+					{% endfor %}
                                     </select></td></tr>
                         <input type=submit value="Search"></td></tr>
                         </form></td></tr>
 </center>
 </body>
 </html>
-
-<a href="index.html">
