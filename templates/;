@@ -1,38 +1,12 @@
-<html>
-<style>
-dy{
-       font-size: 15pt;
-       font-family: arial;
-}
-</style>
-<body>
-<center>
-<h1>Zane and Maurice's Magical Literature Database</h1>
-<h4><a href="/">Home</a></td></tr></h4>
-</center>
-
-<table>
-{% for t in table %}
-    <tr>
-    {% for i in t %}
-        <td>{{ i }}</td>
-    {% endfor %}
-    </tr>
-{% endfor %}
- </table>
 
 
-</body>
-</html>
 
-<!--
 {% for row in data %}
     <tr>
        {% for column in data %}
           <td>{{column}}</td>         
     </tr>
 {% endfor %}
-
  #
   # Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
@@ -58,4 +32,3 @@ dy{
   #     {% for n in data %}
   #     <div>{{n}}</div>
   #     {% endfor %}
--->

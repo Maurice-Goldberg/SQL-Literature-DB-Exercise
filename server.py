@@ -91,31 +91,32 @@ def selection():
 	cursor.close()
 	return render_template("/selection.html", **context)
 
-@app.route('/result')
+@app.route('/result', methods=["POST"])
 def result():
-  if(select == "Author"):
         resultvar1 = request.form.get('entity1')
-        resultvar2 = request.form.get('entity2')
-        
-  	#One table for 1 to 2 authors
-        cursorA = g.conn.execute('')#SQL query for table1
+        print resultvar1
+	resultvar2 = request.form.get('entity2')
+        print resultvar2
+	
+#For later: create provision:
+#if resultvar1 is blank, make it null
+#if resultvar2 is blank, make it null
+#if both are blank, return to same page
+	queryA = "SELECT * FROM Country C WHERE C.country_name=\'" + resultvar1 + "\' OR C.country_name=\'" + resultvar2 + "\';"
+	cursorA = g.conn.execute(queryA)
 	namesA = []
-  	for result in cursorA:
-	    	namesA.append(result[0])
-	  	contextA = dict(data = namesA)
-	cursorA.close()
-	return render_template("/authorresult.html", **contextA)
+	for result in cursorA:
+		namesA.append(result[])
+		contextA = dict(data = namesA)
+	return render_template("/countryresult.html", **contextA)
 
-#HOW DO YOU CREATE THREE SEPARATE TABLES IN FLASK ON ONE PAGE?? Can you render template three different times?
-
-  	#One to two tables for texts by the author(s)
-        cursorB = g.conn.execute('')#SQL query for table2
+"""
+	cursorB = g.conn.execute('')#SQL query for table2
 	namesB = []
   	for result in cursorB:
 	    	namesB.append(result[0])
 	  	contextB = dict(data = namesB)
 	cursorB.close()
-	return render_template("/authorresult.html", **contextB)
 
         cursorC = g.conn.execute('')#SQL query for table3
 	namesC = []
@@ -123,8 +124,42 @@ def result():
 	    	namesC.append(result[0])
 	  	contextC = dict(data = namesC)
 	cursorC.close()
-	return render_template("/authorresult.html", **contextC)
 
+	return render_template("/authorresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
+"""
+"""
+	rows = cursorA.fetchall()
+	data = [ dict(zip(cursorA.keys(), row)) for row in rows]
+
+		rows = 2
+		columns = 13
+		mytable = [[0 for x in range(columns)] for x in range(rows)]
+		for i in range(rows):
+    			for j in range(columns):
+        			mytable[i][j] = '%s,%s'%(i,j)
+
+		for result in cursorA:
+		    	namesA.append(result[0])
+		  	contextA = dict(data = namesA)
+		cursorA.close()
+		return render_template("/authorresult.html", **contextA)
+"""
+
+"""
+rows = 2
+columns = 13
+mytable = [[0 for x in range(columns)] for x in range(rows)]
+for i in range(rows):
+    for j in range(columns):
+        mytable[i][j] = '%s,%s'%(i,j)
+
+"""
+
+"""
+	return render_template("/authorresult.html", **contextA, **contextB, **contextC)
+"""
+
+"""
   if(select == "Text"):
   	return render_template("/textresult.html", **context)
   if(select == "Publisher"):
@@ -137,6 +172,7 @@ def result():
   	return render_template("/structureresult.html", **context)
   if(select == "Institution"):
   	return render_template("/institutionresult.html", **context)
+"""
 
 """ 
   request is a special object that Flask provides to access web request information:
