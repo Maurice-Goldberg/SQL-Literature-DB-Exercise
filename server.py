@@ -1,6 +1,4 @@
-"""Columbia's COMS W4111.001 Introduction to Databases
-Example Webserver
-
+"""
 To run locally:
 
     python server.py
@@ -63,13 +61,11 @@ def teardown_request(exception):
 # see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 
-#this is the page with 4 dropdown menus, where the results of a specific query
-#(the names of whichever category the end-user chooses)are filled into all four dropdown menus
-@app.route('/')
+@app.route('/', methods=["GET"])
 def index():
   return render_template("index.html")
 
-@app.route('/selection')
+@app.route('/selection', methods=["GET"])
 def selection():
 	select = request.form.get('category')
 	select.replace(" ", "_")
