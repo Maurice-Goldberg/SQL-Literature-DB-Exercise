@@ -72,7 +72,7 @@ def index():
 @app.route('/selection')
 def selection():
 	select = request.form.get('category')
-	select.replace (" ", "_")
+	select.replace(" ", "_")
 	cursor = g.conn.execute('SELECT * FROM %s;', select)
 	names = []
   	for result in cursor:
@@ -84,9 +84,37 @@ def selection():
 @app.route('/result')
 def result():
   if(select == "Author"):
-  	#display table for 1 to 2 authors
-  	#display 1 to 2 text tables for texts by that author
-	return render_template("/authorresult.html", **context)
+        resultvar1 = request.form.get('entity1')
+        resultvar2 = request.form.get('entity2')
+        
+  	#One table for 1 to 2 authors
+        cursorA = g.conn.execute('')#SQL query for table1
+	namesA = []
+  	for result in cursorA:
+	    	namesA.append(result[0])
+	  	cursorA.close()
+	  	contextA = dict(data = namesA)
+	return render_template("/authorresult.html", **contextA)
+
+#HOW DO YOU CREATE THREE SEPARATE TABLES IN FLASK ON ONE PAGE?? Can you render template three different times?
+
+  	#One to two tables for texts by the author(s)
+        cursorB = g.conn.execute('')#SQL query for table2
+	namesB = []
+  	for result in cursorB:
+	    	namesB.append(result[0])
+	  	cursorB.close()
+	  	contextB = dict(data = namesB)
+	return render_template("/authorresult.html", **contextB)
+
+        cursorC = g.conn.execute('')#SQL query for table3
+	namesC = []
+  	for result in cursorC:
+	    	namesC.append(result[0])
+	  	cursorC.close()
+	  	contextC = dict(data = namesC)
+	return render_template("/authorresult.html", **contextC)
+
   if(select == "Text"):
   	return render_template("/textresult.html", **context)
   if(select == "Publisher"):
