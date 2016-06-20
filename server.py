@@ -1,10 +1,7 @@
 """
-To run locally:
-
+cally:
     python server.py
-
 Go to http://localhost:8111 in your browser.
-
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
 """
@@ -27,7 +24,6 @@ def before_request():
   This function is run at the beginning of every web request 
   (every time you enter an address in the web browser).
   We use it to setup a database connection that can be used throughout the request.
-
   The variable g is globally accessible.
   """
   try:
@@ -310,14 +306,12 @@ def result():
 """
 	rows = cursorA.fetchall()
 	data = [ dict(zip(cursorA.keys(), row)) for row in rows]
-
 		rows = 2
 		columns = 13
 		mytable = [[0 for x in range(columns)] for x in range(rows)]
 		for i in range(rows):
     			for j in range(columns):
         			mytable[i][j] = '%s,%s'%(i,j)
-
 		for result in cursorA:
 		    	namesA.append(result[0])
 		  	contextA = dict(data = namesA)
@@ -332,7 +326,6 @@ mytable = [[0 for x in range(columns)] for x in range(rows)]
 for i in range(rows):
     for j in range(columns):
         mytable[i][j] = '%s,%s'%(i,j)
-
 """
 
 """
@@ -358,11 +351,9 @@ for i in range(rows):
   request is a special object that Flask provides to access web request information:
   These methods are used to gather information about the HTML GET request coming from the browser
 the server, since it's a server, isn't requesting anything itself. Only the browser is requesting something.
-
   request.method:   "GET" or "POST"
   request.form:     if the browser submitted a form, this contains the data in the form
   request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
-
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
 """
 
@@ -379,13 +370,9 @@ if __name__ == "__main__":
     """
     This function handles command line parameters.
     Run the server using:
-
         python server.py
-
     Show the help text using:
-
         python server.py --help
-
     """
 
     HOST, PORT = host, port
@@ -394,4 +381,3 @@ if __name__ == "__main__":
 
 
   run()
-
