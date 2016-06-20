@@ -1,10 +1,7 @@
 """
-To run locally:
-
+cally:
     python server.py
-
 Go to http://localhost:8111 in your browser.
-
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
 """
@@ -27,7 +24,6 @@ def before_request():
   This function is run at the beginning of every web request 
   (every time you enter an address in the web browser).
   We use it to setup a database connection that can be used throughout the request.
-
   The variable g is globally accessible.
   """
   try:
@@ -165,7 +161,7 @@ def result():
 
 		
 	elif(select == "Institution"):	
-		queryA = "SELECT I.institution_name, R.country_name FROM Institution I JOIN Resides_In R ON I.institution_name=R.Institution_name WHERE I.institution_name=\'" +resultvar1 + "\' OR I.institution_name=\'" + resultvar2 +"\';"
+		queryA = "SELECT I.institution_name, R.country_name FROM Institution I JOIN Resides_In R ON I.institution_name=R.institution_name WHERE I.institution_name=\'" +resultvar1 + "\' OR I.institution_name=\'" + resultvar2 +"\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
 		for result in cursorA:
@@ -193,7 +189,7 @@ def result():
 		#return render_template("/institutionresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
 		
 	elif(select == "Publisher"):	
-		queryA = "SELECT P.publisher_name, L.country_name FROM Publisher P JOIN Located_In ON P.publisher_name=L.publisher_name WHERE P.publisher_name=\'" + resultvar1 + "\' OR P.publisher_name=\'" +resultvar2 + "\';"
+		queryA = "SELECT P.publisher_name, L.country_name FROM Publisher P JOIN Located_In L ON P.publisher_name=L.publisher_name WHERE P.publisher_name=\'" + resultvar1 + "\' OR P.publisher_name=\'" +resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
 		for result in cursorA:
@@ -249,7 +245,7 @@ def result():
 		#return render_template("/structureresult.html", **contextC)
 		#return render_template("/structureresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
 		
-'''
+
 	elif(select == "Literary_Style"):	
 		queryA = "SELECT * FROM Literary_Style L WHERE L.style_name=\'" +resultvar1 + "\' OR L.style_name=\'" + resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
@@ -257,6 +253,7 @@ def result():
 		for result in cursorA:
 			namesA.append(result)
 			contextA = dict(data = namesA)
+		return render_template("/literarystyleresult.html", **contextA)
 
 		queryB = "SELECT W.title AS texts FROM Written_In W WHERE W.style_name=\'" + resultvar1 +"\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
@@ -265,6 +262,7 @@ def result():
 		    	namesB.append(result[0])
 		  	contextB = dict(data = namesB)
 		cursorB.close()
+		#return render_template("/literarystyleresult.html", **contextB)
 
                 queryC = "SELECT W.title AS texts FROM Written_In W WHERE W.style_name=\'" + resultvar1 +"\';"
 	        cursorC = g.conn.execute('')#SQL query for table3
@@ -273,8 +271,8 @@ def result():
 		    	namesC.append(result[0])
 		  	contextC = dict(data = namesC)
 		cursorC.close()
-
-                return render_template("/literarystyleresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
+		#return render_template("/literarystyleresult.html", **contextC)
+                #return render_template("/literarystyleresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
                 
  	elif(select == "Texts"):	
 		queryA = "SELECT T.title, Pi.country_name, Pb.publisher_name, Wa.structure_name, Wi.style_name, T.noun_frequency, T.adjective_frequency, T.preposition_frequency, T.verb_frequency, T.adverb_frequency, T.determiner_frequency, T.conjunction_frequency, T.pronoun_frequency, T.pronoun_frequency, T.most_common_word FROM Text T, Published_In Pi, Published_By Pb, Written_As_A Wa, Written_In Wi WHERE T.title=Pi.title AND T.title=Pb.title AND T.title=Wa.title AND T.title=Wi.title AND (T.title=\'" + resultvar1 + "\' OR T.title=\'" + resultvar2 + "\');"
@@ -284,7 +282,7 @@ def result():
 			namesA.append(result)
 		contextA = dict(table1 = namesA)
 		cursorA.close()
-		#return render_template("/countryresult.html", **contextA)
+		return render_template("/textresult.html", **contextA)
 
 		queryB = "SELECT W.author_name AS authors, W.before AS Year FROM Written_By W WHERE W.title=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)
@@ -293,7 +291,8 @@ def result():
 		    	namesB.append(result)
 		contextB = dict(table2 = namesB)
 		cursorB.close()
-
+		#return render_template("/textresult.html", **contextB)	
+	
 		queryC = "SELECT W.author_name AS authors, W.before AS Year FROM Written_By W WHERE W.title=\'" + resultvar2 + "\';"
 	        cursorC = g.conn.execute(queryC)
 		namesC = []
@@ -301,20 +300,18 @@ def result():
 		    	namesC.append(result)
 		contextC = dict(table3 = namesC)
 		cursorC.close()
+		#return render_template("/textresult.html", **contextC)
+		#return render_template("/textresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)               
 
-		return render_template("/textresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)               
-'''
 """
 	rows = cursorA.fetchall()
 	data = [ dict(zip(cursorA.keys(), row)) for row in rows]
-
 		rows = 2
 		columns = 13
 		mytable = [[0 for x in range(columns)] for x in range(rows)]
 		for i in range(rows):
     			for j in range(columns):
         			mytable[i][j] = '%s,%s'%(i,j)
-
 		for result in cursorA:
 		    	namesA.append(result[0])
 		  	contextA = dict(data = namesA)
@@ -329,7 +326,6 @@ mytable = [[0 for x in range(columns)] for x in range(rows)]
 for i in range(rows):
     for j in range(columns):
         mytable[i][j] = '%s,%s'%(i,j)
-
 """
 
 """
@@ -355,11 +351,9 @@ for i in range(rows):
   request is a special object that Flask provides to access web request information:
   These methods are used to gather information about the HTML GET request coming from the browser
 the server, since it's a server, isn't requesting anything itself. Only the browser is requesting something.
-
   request.method:   "GET" or "POST"
   request.form:     if the browser submitted a form, this contains the data in the form
   request.args:     dictionary of URL arguments, e.g., {a:1, b:2} for http://localhost?a=1&b=2
-
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
 """
 
@@ -376,13 +370,9 @@ if __name__ == "__main__":
     """
     This function handles command line parameters.
     Run the server using:
-
         python server.py
-
     Show the help text using:
-
         python server.py --help
-
     """
 
     HOST, PORT = host, port
@@ -391,4 +381,3 @@ if __name__ == "__main__":
 
 
   run()
-
