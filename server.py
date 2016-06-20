@@ -105,115 +105,132 @@ def result():
 		print queryA
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		print cursorA.keys()
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(table1 = namesA)
+		contextA = dict(table1 = namesA)
 		cursorA.close()
-		return render_template("/authorresult.html", **contextA)
+		#return render_template("/authorresult.html", **contextA)
+		print contextA
 
 		queryB = "SELECT W.title AS texts, W.before AS Year FROM Written_By W WHERE W.author_name=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
 		    	namesB.append(result)
-		contextB = dict(table2 = namesB)
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/authorresult.html", **contextB)
 
 		queryC = "SELECT W.title AS texts, W.before AS Year FROM Written_By W WHERE W.author_name=\'" + resultvar2 + "\';" 
 	        cursorC = g.conn.execute(queryC)
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
 		    	namesC.append(result)
-		contextC = dict(table3 = namesC)
+		contextA.update(table3 = namesC)
 		cursorC.close()
+		#contextA.update(
+		#contextA.append
 		#return render_template("/authorresult.html", **contextC)	
-		#return render_template("/authorresult.html",**contextA, **contextB, **contextC)
+		return render_template("/authorresult.html",**contextA)
 
 
 	elif(select == "Country"):	
 		queryA = "SELECT * FROM Country C WHERE C.country_name=\'" + resultvar1 + "\' OR C.country_name=\'" + resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
+		print cursorA
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(data = namesA)
-		return render_template("/countryresult.html", **contextA)
-
+		contextA = dict(table1= namesA)
+		#return render_template("/countryresult.html", **contextA)
+		print namesA
 		queryB = "SELECT Pi.title AS texts FROM Published_In Pi WHERE Pi.country_name=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
-		    	namesB.append(result[0])
-		  	contextB = dict(data = namesB)
+		    	namesB.append([result[0]])
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/countryresult.html",**contextB)
 
                 queryC = "SELECT Pi.title AS texts FROM Published_In Pi WHERE Pi.country_name=\'" + resultvar2 + "\';"
 	        cursorC = g.conn.execute(queryC)#SQL query for table3
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
-		    	namesC.append(result[0])
-		  	contextC = dict(data = namesC)
+		    	namesC.append([result[0]])
+		contextA.update(table3= namesC)
 		cursorC.close()
 		#return render_template("/countryresult.html",**contextC)	
-		#return render_template("/countryresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
+		return render_template("/countryresult.html", **contextA)
 
 		
 	elif(select == "Institution"):	
 		queryA = "SELECT I.institution_name, R.country_name FROM Institution I JOIN Resides_In R ON I.institution_name=R.institution_name WHERE I.institution_name=\'" +resultvar1 + "\' OR I.institution_name=\'" + resultvar2 +"\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(data = namesA)
-		return render_template("/institution.html", **contextA)
+		contextA = dict(table1 = namesA)
+		#return render_template("/institution.html", **contextA)
 
 		queryB = "SELECT T.author_name AS author, T.subject FROM Taught_At T WHERE T.institution_name=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
 		    	namesB.append(result)
-		  	contextB = dict(data = namesB)
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/institutionresult.html", **contextB)
 
                 queryC = "SELECT T.author_name AS author, T.subject FROM Taught_At T WHERE T.institution_name=\'" + resultvar2 + "\';"
 	        cursorC = g.conn.execute(queryC)#SQL query for table3
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
 		    	namesC.append(result)
-		  	contextC = dict(data = namesC)
+		contextA.update(table3 = namesC)
 		cursorC.close()
 		#return render_template("/institutionresult.html", **contextB)
-		#return render_template("/institutionresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
+		return render_template("/institutionresult.html", **contextA)
 		
 	elif(select == "Publisher"):	
 		queryA = "SELECT P.publisher_name, L.country_name FROM Publisher P JOIN Located_In L ON P.publisher_name=L.publisher_name WHERE P.publisher_name=\'" + resultvar1 + "\' OR P.publisher_name=\'" +resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(data = namesA)
-		return render_template("/publisherresult.html", **contextA)
+		contextA = dict(table1 = namesA)
+		#return render_template("/publisherresult.html", **contextA)
 
 		queryB = "SELECT P.title AS texts, P.year AS year_of_publication FROM Published_By P WHERE P.publisher_name=\'" +resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
 		    	namesB.append(result)
-		  	contextB = dict(data = namesB)
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/publisherresult.html", **contextB)
 
                 queryC = "SELECT P.title AS texts, P.year AS year_of_publication FROM Published_By P WHERE P.publisher_name=\'" +resultvar2 + "\';"
 	        cursorC = g.conn.execute(queryC)#SQL query for table3
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
 		    	namesC.append(result)
-		  	contextC = dict(data = namesC)
+		contextA.update(table3 = namesC)
 		cursorC.close()
-		#return render_template("/publisherresult.html", **contextC)
+		return render_template("/publisherresult.html", **contextA)
 		#return render_template("/publisherresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
 		
 		
@@ -221,28 +238,31 @@ def result():
 		queryA = "SELECT * FROM Structure S WHERE S.structure_name=\'" + resultvar1 + "\' OR S.structure_name=\'" +resultvar2 + "';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(data = namesA)
-		return render_template("/structureresult.html", **contextA)
+		contextA = dict(table1 = namesA)
+		#return render_template("/structureresult.html", **contextA)
 
 		queryB = "SELECT W.title AS texts FROM Written_As_A W WHERE W.structure_name=\'" +resultvar1 +"\';"
-		cursorB = g.conn.execute('')#SQL query for table2
+		cursorB = g.conn.execute(queryB)#SQL query for table2
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
-		    	namesB.append(result[0])
-		  	contextB = dict(data = namesB)
+		    	namesB.append([result[0]])
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/structureresult.html", **contextB)
 
                 queryC = "SELECT W.title AS texts FROM Written_As_A W WHERE W.structure_name=\'" +resultvar2 +"\';"
-	        cursorC = g.conn.execute('')#SQL query for table3
+	        cursorC = g.conn.execute(queryC)#SQL query for table3
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
-		    	namesC.append(result[0])
-		  	contextC = dict(data = namesC)
+		    	namesC.append([result[0]])
+		contextA.update(table3 = namesC)
 		cursorC.close()
-		#return render_template("/structureresult.html", **contextC)
+		return render_template("/structureresult.html", **contextA)
 		#return render_template("/structureresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
 		
 
@@ -250,57 +270,63 @@ def result():
 		queryA = "SELECT * FROM Literary_Style L WHERE L.style_name=\'" +resultvar1 + "\' OR L.style_name=\'" + resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
-			contextA = dict(data = namesA)
-		return render_template("/literarystyleresult.html", **contextA)
+		contextA = dict(table1 = namesA)
+		#return render_template("/literarystyleresult.html", **contextA)
 
 		queryB = "SELECT W.title AS texts FROM Written_In W WHERE W.style_name=\'" + resultvar1 +"\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
-		    	namesB.append(result[0])
-		  	contextB = dict(data = namesB)
+		    	namesB.append([result[0]])
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/literarystyleresult.html", **contextB)
 
-                queryC = "SELECT W.title AS texts FROM Written_In W WHERE W.style_name=\'" + resultvar1 +"\';"
-	        cursorC = g.conn.execute('')#SQL query for table3
+                queryC = "SELECT W.title AS texts FROM Written_In W WHERE W.style_name=\'" + resultvar2 +"\';"
+	        cursorC = g.conn.execute(queryC)#SQL query for table3
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
-		    	namesC.append(result[0])
-		  	contextC = dict(data = namesC)
+		    	namesC.append([result[0]])
+		contextA.update(table3 = namesC)
 		cursorC.close()
-		#return render_template("/literarystyleresult.html", **contextC)
+		return render_template("/literarystyleresult.html", **contextA)
                 #return render_template("/literarystyleresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)
                 
- 	elif(select == "Texts"):	
+ 	elif(select == "Text"):	
 		queryA = "SELECT T.title, Pi.country_name, Pb.publisher_name, Wa.structure_name, Wi.style_name, T.noun_frequency, T.adjective_frequency, T.preposition_frequency, T.verb_frequency, T.adverb_frequency, T.determiner_frequency, T.conjunction_frequency, T.pronoun_frequency, T.pronoun_frequency, T.most_common_word FROM Text T, Published_In Pi, Published_By Pb, Written_As_A Wa, Written_In Wi WHERE T.title=Pi.title AND T.title=Pb.title AND T.title=Wa.title AND T.title=Wi.title AND (T.title=\'" + resultvar1 + "\' OR T.title=\'" + resultvar2 + "\');"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
+		namesA.append(cursorA.keys())
 		for result in cursorA:
 			namesA.append(result)
 		contextA = dict(table1 = namesA)
 		cursorA.close()
-		return render_template("/textresult.html", **contextA)
+		#return render_template("/textresult.html", **contextA)
 
 		queryB = "SELECT W.author_name AS authors, W.before AS Year FROM Written_By W WHERE W.title=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)
 		namesB = []
+		namesB.append(cursorB.keys())
 	  	for result in cursorB:
 		    	namesB.append(result)
-		contextB = dict(table2 = namesB)
+		contextA.update(table2 = namesB)
 		cursorB.close()
 		#return render_template("/textresult.html", **contextB)	
 	
 		queryC = "SELECT W.author_name AS authors, W.before AS Year FROM Written_By W WHERE W.title=\'" + resultvar2 + "\';"
 	        cursorC = g.conn.execute(queryC)
 		namesC = []
+		namesC.append(cursorC.keys())
 	  	for result in cursorC:
 		    	namesC.append(result)
-		contextC = dict(table3 = namesC)
+		contextA.update(table3 = namesC)
 		cursorC.close()
-		#return render_template("/textresult.html", **contextC)
+		return render_template("/textresult.html", **contextA)
 		#return render_template("/textresult.html", table1 = **contextA, table2 = **contextB, table3 = **contextC)               
 
 """
