@@ -11,28 +11,44 @@ dy{
 <h4><a href="/">Home</a></td></tr></h4>
 </center>
 
+<p>Authors</p>
 <table>
-{% for t in table %}
+{% for t1 in table1 %}
     <tr>
-    {% for i in t %}
-        <td>{{ i }}</td>
+    {% for i1 in t1 %}
+        <td>{{ i1 }}</td>
     {% endfor %}
     </tr>
 {% endfor %}
  </table>
 
+</br>
+<p>First Author's Texts</p>
+<table>
+{% for t2 in table2 %}
+    <tr>
+    {% for i2 in t2 %}
+        <td>{{ i2 }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+ </table>
 
+</br>
+<p>Second Author's Texts</p>
+<table>
+{% for t3 in table3 %}
+    <tr>
+    {% for i3 in t3 %}
+        <td>{{ i3 }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+ </table>
 </body>
 </html>
 
 <!--
-{% for row in data %}
-    <tr>
-       {% for column in data %}
-          <td>{{column}}</td>         
-    </tr>
-{% endfor %}
-
  #
   # Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
