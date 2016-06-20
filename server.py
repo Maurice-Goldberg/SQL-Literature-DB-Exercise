@@ -135,7 +135,7 @@ def result():
 		#return render_template("/authorresult.html",**contextA, **contextB, **contextC)
 
 
-	if(select == "Country"):	
+	elif(select == "Country"):	
 		queryA = "SELECT * FROM Country C WHERE C.country_name=\'" + resultvar1 + "\' OR C.country_name=\'" + resultvar2 + "\';"
 		cursorA = g.conn.execute(queryA)
 		namesA = []
@@ -171,7 +171,7 @@ def result():
 		for result in cursorA:
 			namesA.append(result)
 			contextA = dict(data = namesA)
-		return render_template("/institutionresult.html", **contextA)
+		return render_template("/institution.html", **contextA)
 
 		queryB = "SELECT T.author_name AS author, T.subject FROM Taught_At T WHERE T.institution_name=\'" + resultvar1 + "\';"
 		cursorB = g.conn.execute(queryB)#SQL query for table2
